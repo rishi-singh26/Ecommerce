@@ -4,6 +4,7 @@ import { provideStore } from '@ngrx/store';
 
 import { routes } from './app.routes';
 import { reducers } from './store/app-store';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -11,5 +12,6 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideStore(reducers),
+    provideHttpClient(),
   ]
 };

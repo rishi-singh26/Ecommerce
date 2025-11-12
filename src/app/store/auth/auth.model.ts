@@ -1,4 +1,11 @@
 export interface LoginResponse {
+    statusCode: number;
+    data: LoginData;
+    message: string;
+    success: boolean;
+}
+
+export interface LoginData {
     user: User;
     accessToken: string;
     refreshToken: string;
