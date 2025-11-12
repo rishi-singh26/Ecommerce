@@ -18,7 +18,7 @@ import {
   deleteCategorySuccess,
   deleteCategoryFailure,
 } from '../../../store/category/category.action';
-import { CreateCategoryRequest, UpdateCategoryRequest, CategoryResponse } from '../../../store/category/category.model';
+import { CreateCategoryRequest, UpdateCategoryRequest, GetAllCategoriesResp, GetCategoryByIdResp, CreateCategoryResponse, UpdateCategoryResponse, DeleteCategoryResponse } from '../../../store/category/category.model';
 import { AppState } from '../../../store/app-store';
 import { catchError, of } from 'rxjs';
 import { BASE_URL } from '../../../shared/app-constants';
@@ -38,7 +38,7 @@ export class CategoryService {
   fetchCategories(): void {
     this.store.dispatch(fetchCategories());
     this.httpService
-      .get<CategoryResponse>(API_BASE_URL)
+      .get<GetAllCategoriesResp>(API_BASE_URL)
       .pipe(
         catchError((error) => {
           this.store.dispatch(
@@ -52,11 +52,7 @@ export class CategoryService {
       .subscribe((response) => {
         if (response && response.success) {
           const categories = Array.isArray(response.data) ? response.data : [response.data];
-          this.store.dispatch(
-            fetchCategoriesSuccess({
-              categories,
-            })
-          );
+          this.store.dispatch(fetchCategoriesSuccess({ categories: response.data.categories }));
         }
       });
   }
@@ -68,7 +64,7 @@ export class CategoryService {
   fetchCategoryById(categoryId: string): void {
     this.store.dispatch(fetchCategoryById({ categoryId }));
     this.httpService
-      .get<CategoryResponse>(`${API_BASE_URL}/${categoryId}`)
+      .get<GetCategoryByIdResp>(`${API_BASE_URL}/${categoryId}`)
       .pipe(
         catchError((error) => {
           this.store.dispatch(
@@ -98,7 +94,7 @@ export class CategoryService {
   createCategory(categoryData: CreateCategoryRequest): void {
     this.store.dispatch(createCategory({ categoryData }));
     this.httpService
-      .post<CategoryResponse>(API_BASE_URL, categoryData)
+      .post<CreateCategoryResponse>(API_BASE_URL, categoryData)
       .pipe(
         catchError((error) => {
           this.store.dispatch(
@@ -129,7 +125,7 @@ export class CategoryService {
   updateCategory(categoryId: string, categoryData: UpdateCategoryRequest): void {
     this.store.dispatch(updateCategory({ categoryId, categoryData }));
     this.httpService
-      .patch<CategoryResponse>(`${API_BASE_URL}/${categoryId}`, categoryData)
+      .patch<UpdateCategoryResponse>(`${API_BASE_URL}/${categoryId}`, categoryData)
       .pipe(
         catchError((error) => {
           this.store.dispatch(
@@ -159,7 +155,7 @@ export class CategoryService {
   deleteCategory(categoryId: string): void {
     this.store.dispatch(deleteCategory({ categoryId }));
     this.httpService
-      .delete<CategoryResponse>(`${API_BASE_URL}/${categoryId}`)
+      .delete<DeleteCategoryResponse>(`${API_BASE_URL}/${categoryId}`)
       .pipe(
         catchError((error) => {
           this.store.dispatch(

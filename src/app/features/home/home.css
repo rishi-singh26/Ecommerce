@@ -1,0 +1,235 @@
+.admin-container .page-label {
+  font-size: 14px;
+}
+
+.admin-container mat-sidenav,
+.admin-container mat-sidenav-container {
+  height: calc(100vh - 60px);
+}
+
+@media (min-width: 576px) {
+  .admin-container mat-sidenav,
+  .admin-container mat-sidenav-container {
+    height: calc(100vh - 72px);
+  }
+}
+
+.admin-container .sidenav-container {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.admin-container .sidenav {
+  width: 305px;
+}
+
+.admin-container .sidenav-group {
+  font-size: 16px;
+  color: #000;
+}
+
+.admin-container .sidenav-item {
+  box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.16);
+  padding-left: 34px;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+}
+
+.admin-container .sidenav-item-title {
+  color: #000;
+  letter-spacing: normal;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+}
+
+.admin-container .sidenav-item:hover {
+  background-color: #f0f0f0;
+  padding-left: 38px;
+}
+
+.admin-container .sidenav-item:hover .sidenav-item-title {
+  color: #007bff;
+}
+
+.admin-container .sidenav-item.sidenav-item-active {
+  background-color: #f0f0f0;
+  border-left: 4px solid #007bff;
+  padding-left: 30px;
+}
+
+.admin-container .sidenav-item.sidenav-item-active .sidenav-item-title {
+  font-family: 'Graphik-Medium';
+  color: #007bff;
+}
+
+.admin-container .right-container {
+  min-height: calc(100vh - 72px);
+  padding: 30px;
+  background-color: #f5f5f5;
+}
+
+@media (min-width: 1200px) {
+  .admin-container .right-container {
+    padding: 60px;
+  }
+}
+
+/* Page styles */
+.outer-container {
+  padding: 16px;
+}
+
+@media (min-width: 1200px) {
+  .outer-container {
+    padding: 20px 30px;
+    min-height: 480px;
+  }
+}
+
+.outer-container .page-header {
+  font-family: "Graphik-Medium";
+  color: #000;
+  font-size: 18px;
+}
+
+@media (min-width: 768px) {
+  .outer-container .page-header {
+    font-size: 24px;
+  }
+}
+
+.outer-container .download-icon {
+  color: #007bff;
+  opacity: 100%;
+  font-size: 18px;
+}
+
+@media (min-width: 768px) {
+  .outer-container .download-icon {
+    font-size: 20px;
+  }
+}
+
+.outer-container .header-dropdown-container {
+  margin-bottom: 8px;
+}
+
+.outer-container .header-dropdown {
+  color: #9013fe;
+  font-family: 'Graphik-Medium';
+  text-transform: capitalize;
+  font-size: 18px;
+}
+
+@media (min-width: 768px) {
+  .outer-container .header-dropdown {
+    font-size: 24px;
+  }
+}
+
+.outer-container .drag-and-drop-wrapper {
+  min-height: 155px;
+  padding: 20px 40px;
+  border-radius: 6px;
+  border: 2px dashed #007bff;
+}
+
+.outer-container .drag-and-drop-zone {
+  font-size: 16px;
+  color: #000;
+}
+
+@media (min-width: 768px) {
+  .outer-container .drag-and-drop-zone {
+    font-size: 18px;
+  }
+}
+
+.outer-container .drag-and-drop-zone .browse {
+  font-family: "Graphik-Medium";
+  text-decoration: underline;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.outer-container .drag-and-drop-zone .browse-disabled {
+  font-family: "Graphik-Medium";
+  text-decoration: underline;
+  color: #007bff;
+  opacity: 0.5;
+}
+
+.outer-container .lde-icon-download-file {
+  color: #9013fe;
+  font-size: 46px;
+}
+
+.outer-container .file-details {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 12px 20px;
+}
+
+.outer-container .file-details .file-name {
+  color: #000;
+}
+
+.outer-container .file-details .file-size-text {
+  color: #ccc;
+  font-size: 12px;
+}
+
+.outer-container .btn-file-remove {
+  color: #dc3545 !important;
+  font-size: 20px;
+}
+
+.outer-container .spinner-container {
+  margin-left: 20px;
+}
+
+mat-toolbar {
+  padding: 10px 20px;
+  height: 60px;
+  box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.16);
+}
+
+@media (min-width: 576px) {
+  mat-toolbar {
+    padding: 10px 40px;
+    height: 72px;
+  }
+}
+
+.navbar-brand {
+  color: #000;
+  font-size: 16px;
+}
+
+.navbar-brand .logo {
+  color: #9013fe;
+  border-right: 1px solid #e0e0e0;
+}
+
+@media (min-width: 576px) {
+  .navbar-brand {
+    font-size: 21px;
+  }
+
+  .navbar-brand .logo {
+    font-size: 30px;
+  }
+}
+
+:host::ng-deep.sidenav .ld-mat-accordion .mat-expanded {
+  font-family: 'Graphik-Medium';
+}
+
+:host::ng-deep.sidenav .ld-mat-accordion .mat-expansion-panel-header {
+  box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.16);
+  border-radius: 0;
+  height: 48px;
+  padding-right: 10px;
+}
