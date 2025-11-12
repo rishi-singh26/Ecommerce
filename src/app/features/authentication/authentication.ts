@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { saveLoginData } from '../../store/auth/auth.action';
+import { BASE_URL } from '../../shared/app-constants';
 
 @Component({
   selector: 'app-authentication',
@@ -8,6 +11,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './authentication.css',
 })
 export class Authentication {
+  private store = inject(Store);
+
   // mode: 'login' or 'register'
   protected mode: 'login' | 'register' = 'login';
   protected loading = false;
@@ -41,18 +46,14 @@ export class Authentication {
     }
     this.loading = true;
     try {
-      const url = 'https://api.freeapi.app/api/v1/users/login';
+      const url = `${BASE_URL}/users/login`;
       const { ok, data } = await this.postJson(url, this.loginModel);
       if (!ok) {
         this.error = (data && (data.message || data.error)) || 'Login failed';
         return;
       }
-      // store the auth response (token/user) in localStorage
-      try {
-        localStorage.setItem('auth', JSON.stringify(data));
-      } catch (e) {
-        // ignore storage errors
-      }
+      // Dispatch login data to NgRx store
+      this.store.dispatch(saveLoginData({ loginData: data }));
       this.success = 'Login successful.';
     } catch (e: any) {
       this.error = e?.message || String(e);
@@ -69,7 +70,7 @@ export class Authentication {
     }
     this.loading = true;
     try {
-      const url = 'https://api.freeapi.app/api/v1/users/register';
+      const url = `${BASE_URL}/users/register`;
       const { ok, data } = await this.postJson(url, this.registerModel);
       if (!ok) {
         this.error = (data && (data.message || data.error)) || 'Registration failed';
