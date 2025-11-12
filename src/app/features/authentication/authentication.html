@@ -1,217 +1,249 @@
 <div class="auth-container">
-	<div class="auth-wrapper">
-		<!-- Left Hero Section -->
-		<div class="auth-hero">
-			<div class="hero-content">
-				<div class="hero-logo">
-					<svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-						<rect width="48" height="48" rx="12" fill="url(#grad1)"/>
-						<path d="M24 12L32 18V36H16V18L24 12Z" fill="white"/>
-						<path d="M24 20L28 23V32H20V23L24 20Z" fill="#007bff"/>
-						<defs>
-							<linearGradient id="grad1" x1="0" y1="0" x2="48" y2="48">
-								<stop offset="0%" style="stop-color:#007bff;stop-opacity:1" />
-								<stop offset="100%" style="stop-color:#0056b3;stop-opacity:1" />
-							</linearGradient>
-						</defs>
-					</svg>
-				</div>
-				<h1 class="hero-title">Ecommerce</h1>
-				<p class="hero-subtitle">Your trusted shopping destination</p>
-				<div class="hero-features">
-					<div class="feature-item">
-						<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-							<path d="M10 1L13 7H19L14.5 11L16 17L10 13L4 17L5.5 11L1 7H7L10 1Z" fill="currentColor"/>
-						</svg>
-						<span>Secure & Trusted</span>
-					</div>
-					<div class="feature-item">
-						<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-							<path d="M1 4H19M2 4V16C2 17.1 2.9 18 4 18H16C17.1 18 18 17.1 18 16V4M5 4V2M15 4V2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-						</svg>
-						<span>Fast Delivery</span>
-					</div>
-					<div class="feature-item">
-						<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-							<path d="M10 1C5.6 1 2 4.6 2 9C2 14.5 10 19 10 19S18 14.5 18 9C18 4.6 14.4 1 10 1Z" fill="currentColor"/>
-						</svg>
-						<span>Best Prices</span>
-					</div>
-				</div>
-			</div>
-		</div>
+  <mat-card class="auth-card">
+    <mat-card-header class="auth-header p-4 pb-4">
+      <div class="auth-logo">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <rect width="48" height="48" rx="12" fill="url(#grad1)" />
+          <path d="M24 12L32 18V36H16V18L24 12Z" fill="white" />
+          <path d="M24 20L28 23V32H20V23L24 20Z" fill="#e7f1ff" />
+          <defs>
+            <linearGradient id="grad1" x1="0" y1="0" x2="48" y2="48">
+              <stop offset="0%" style="stop-color: #007bff; stop-opacity: 1" />
+              <stop offset="100%" style="stop-color: #0056b3; stop-opacity: 1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <mat-card-title class="auth-title">Ecommerce</mat-card-title>
+      <mat-card-subtitle class="auth-subtitle m-0">Your trusted shopping destination</mat-card-subtitle>
+    </mat-card-header>
 
-		<!-- Right Form Section -->
-		<div class="auth-form-section">
-			<div class="auth-form-container">
-				<!-- Mode Toggle -->
-				<div class="mode-toggle-wrapper">
-					<div class="mode-toggle">
-						<button 
-							class="toggle-btn" 
-							[class.active]="mode==='login'" 
-							(click)="toggleMode('login')">
-							Login
-						</button>
-						<button 
-							class="toggle-btn" 
-							[class.active]="mode==='register'" 
-							(click)="toggleMode('register')">
-							Register
-						</button>
-					</div>
-				</div>
+    <mat-tab-group
+      [(selectedIndex)]="mode"
+      (selectedIndexChange)="toggleMode($event)"
+      class="auth-tabs"
+      animationDuration="300"
+    >
+      <!-- Login Tab -->
+      <mat-tab label="Sign In" class="auth-tab">
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">login</mat-icon>
+          <span class="tab-label">Sign In</span>
+        </ng-template>
 
-				<!-- Messages -->
-				@if (error) {
-					<div class="alert-box error-box">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-							<circle cx="12" cy="12" r="10"></circle>
-							<line x1="12" y1="8" x2="12" y2="12"></line>
-							<line x1="12" y1="16" x2="12.01" y2="16"></line>
-						</svg>
-						<span>{{ error }}</span>
-					</div>
-				}
-				@if (success) {
-					<div class="alert-box success-box">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-							<polyline points="20 6 9 17 4 12"></polyline>
-						</svg>
-						<span>{{ success }}</span>
-					</div>
-				}
+        <mat-card-content class="form-content">
+          <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="auth-form">
+            <!-- Username Field -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Username or Email</mat-label>
+              <input
+                matInput
+                formControlName="username"
+                type="text"
+                placeholder="Enter your username"
+                autocomplete="username"
+              />
+              <mat-icon matPrefix>person</mat-icon>
+              @if (loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched) {
+              <mat-error>Username is required</mat-error>
+              } @if (loginForm.get('username')?.hasError('minlength') && loginForm.get('username')?.touched) {
+              <mat-error>Username must be at least 3 characters</mat-error>
+              }
+            </mat-form-field>
 
-				<!-- Login Form -->
-				@if (mode==='login') {
-					<form class="auth-form" (submit)="$event.preventDefault(); submitLogin();">
-						<div class="form-group">
-							<label for="login-username" class="form-label">Username or Email</label>
-							<div class="input-wrapper">
-								<input 
-									id="login-username"
-									class="form-input" 
-									type="text" 
-									[value]="loginModel.username" 
-									(input)="loginModel.username = $any($event.target).value" 
-									placeholder="Enter your username"
-									autocomplete="username">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="input-icon">
-									<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-									<circle cx="12" cy="7" r="4"></circle>
-								</svg>
-							</div>
-						</div>
+            <!-- Password Field -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                formControlName="password"
+                [type]="hideLoginPassword ? 'password' : 'text'"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+              />
+              <mat-icon matPrefix>lock</mat-icon>
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="toggleLoginPasswordVisibility()"
+                type="button"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hideLoginPassword"
+              >
+                <mat-icon>{{ hideLoginPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+              <mat-error>Password is required</mat-error>
+              } @if (loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched) {
+              <mat-error>Password must be at least 6 characters</mat-error>
+              }
+            </mat-form-field>
 
-						<div class="form-group">
-							<label for="login-password" class="form-label">Password</label>
-							<div class="input-wrapper">
-								<input 
-									id="login-password"
-									class="form-input" 
-									type="password" 
-									[value]="loginModel.password" 
-									(input)="loginModel.password = $any($event.target).value" 
-									placeholder="Enter your password"
-									autocomplete="current-password">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="input-icon">
-									<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-									<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-								</svg>
-							</div>
-						</div>
+            <!-- Submit Button -->
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="loading || loginForm.invalid"
+              class="submit-button"
+            >
+              @if (loading) {
+                <mat-spinner diameter="24" class="spinner"></mat-spinner>
+                <span class="button-text">Signing in...</span>
+              } @else {
+                <ng-container>
+                  <mat-icon>login</mat-icon>
+                  <span class="button-text">Sign In</span>
+                </ng-container>
+              }
+            </button>
 
-						<button class="btn-submit" type="submit" [disabled]="loading">
-							<span>{{ loading ? 'Logging in...' : 'Sign In' }}</span>
-							@if (!loading) {
-								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-									<line x1="5" y1="12" x2="19" y2="12"></line>
-									<polyline points="12 5 19 12 12 19"></polyline>
-								</svg>
-							}
-						</button>
+            <!-- Footer Link -->
+            <p class="form-footer">
+              Don't have an account?
+              <a href="javascript:void(0)" (click)="toggleMode(1)" class="link">Create one</a>
+            </p>
+          </form>
+        </mat-card-content>
+      </mat-tab>
 
-						<p class="form-footer">
-							Don't have an account? 
-							<a href="#" (click)="$event.preventDefault(); toggleMode('register')" class="link">Create one</a>
-						</p>
-					</form>
-				}
+      <!-- Register Tab -->
+      <mat-tab label="Sign Up" class="auth-tab">
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">app_registration</mat-icon>
+          <span class="tab-label">Sign Up</span>
+        </ng-template>
 
-				<!-- Register Form -->
-				@if (mode==='register') {
-					<form class="auth-form" (submit)="$event.preventDefault(); submitRegister();">
-						<div class="form-group">
-							<label for="register-username" class="form-label">Username</label>
-							<div class="input-wrapper">
-								<input 
-									id="register-username"
-									class="form-input" 
-									type="text" 
-									[value]="registerModel.username" 
-									(input)="registerModel.username = $any($event.target).value" 
-									placeholder="Choose a username"
-									autocomplete="username">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="input-icon">
-									<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-									<circle cx="12" cy="7" r="4"></circle>
-								</svg>
-							</div>
-						</div>
+        <mat-card-content class="form-content">
+          <form [formGroup]="registerForm" (ngSubmit)="submitRegister()" class="auth-form">
+            <!-- Username Field -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Username</mat-label>
+              <input
+                matInput
+                formControlName="username"
+                type="text"
+                placeholder="Choose a username"
+                autocomplete="username"
+              />
+              <mat-icon matPrefix>person</mat-icon>
+              @if (registerForm.get('username')?.hasError('required') && registerForm.get('username')?.touched) {
+              <mat-error>Username is required</mat-error>
+              } @if (registerForm.get('username')?.hasError('minlength') && registerForm.get('username')?.touched) {
+              <mat-error>Username must be at least 3 characters</mat-error>
+              }
+            </mat-form-field>
 
-						<div class="form-group">
-							<label for="register-email" class="form-label">Email Address</label>
-							<div class="input-wrapper">
-								<input 
-									id="register-email"
-									class="form-input" 
-									type="email" 
-									[value]="registerModel.email" 
-									(input)="registerModel.email = $any($event.target).value" 
-									placeholder="your@email.com"
-									autocomplete="email">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="input-icon">
-									<rect x="2" y="4" width="20" height="16" rx="2"></rect>
-									<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-								</svg>
-							</div>
-						</div>
+            <!-- Email Field -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Email Address</mat-label>
+              <input
+                matInput
+                formControlName="email"
+                type="email"
+                placeholder="your@email.com"
+                autocomplete="email"
+              />
+              <mat-icon matPrefix>mail</mat-icon>
+              @if (registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched) {
+              <mat-error>Email is required</mat-error>
+              } @if (registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched) {
+              <mat-error>Please enter a valid email address</mat-error>
+              }
+            </mat-form-field>
 
-						<div class="form-group">
-							<label for="register-password" class="form-label">Password</label>
-							<div class="input-wrapper">
-								<input 
-									id="register-password"
-									class="form-input" 
-									type="password" 
-									[value]="registerModel.password" 
-									(input)="registerModel.password = $any($event.target).value" 
-									placeholder="Create a strong password"
-									autocomplete="new-password">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="input-icon">
-									<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-									<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-								</svg>
-							</div>
-						</div>
+            <!-- Password Field -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                formControlName="password"
+                [type]="hideRegisterPassword ? 'password' : 'text'"
+                placeholder="Create a strong password"
+                autocomplete="new-password"
+              />
+              <mat-icon matPrefix>lock</mat-icon>
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="toggleRegisterPasswordVisibility()"
+                type="button"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hideRegisterPassword"
+              >
+                <mat-icon>{{ hideRegisterPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              @if (registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched) {
+              <mat-error>Password is required</mat-error>
+              } @if (registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched) {
+              <mat-error>Password must be at least 6 characters</mat-error>
+              }
+            </mat-form-field>
 
-						<button class="btn-submit" type="submit" [disabled]="loading">
-							<span>{{ loading ? 'Creating Account...' : 'Create Account' }}</span>
-							@if (!loading) {
-								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-									<line x1="5" y1="12" x2="19" y2="12"></line>
-									<polyline points="12 5 19 12 12 19"></polyline>
-								</svg>
-							}
-						</button>
+            <!-- Confirm Password Field -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Confirm Password</mat-label>
+              <input
+                matInput
+                formControlName="confirmPassword"
+                [type]="hideConfirmPassword ? 'password' : 'text'"
+                placeholder="Re-enter your password"
+                autocomplete="new-password"
+              />
+              <mat-icon matPrefix>lock</mat-icon>
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="toggleConfirmPasswordVisibility()"
+                type="button"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hideConfirmPassword"
+              >
+                <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              @if (registerForm.get('confirmPassword')?.hasError('required') && registerForm.get('confirmPassword')?.touched) {
+              <mat-error>Please confirm your password</mat-error>
+              }
+            </mat-form-field>
 
-						<p class="form-footer">
-							Already have an account? 
-							<a href="#" (click)="$event.preventDefault(); toggleMode('login')" class="link">Sign in</a>
-						</p>
-					</form>
-				}
-			</div>
-		</div>
-	</div>
+            <!-- Role Selection -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Role</mat-label>
+              <mat-select formControlName="role">
+                <mat-option value="USER">User</mat-option>
+                <mat-option value="VENDOR">Vendor</mat-option>
+                <mat-option value="ADMIN">Admin</mat-option>
+              </mat-select>
+              <mat-icon matPrefix>security</mat-icon>
+            </mat-form-field>
+
+            <!-- Submit Button -->
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="loading || registerForm.invalid"
+              class="submit-button"
+            >
+              @if (loading) {
+                <mat-spinner diameter="24" class="spinner"></mat-spinner>
+                <span class="button-text">Creating Account...</span>
+              } @else {
+                <ng-container>
+                  <mat-icon>app_registration</mat-icon>
+                  <span class="button-text">Create Account</span>
+                </ng-container>
+              }
+            </button>
+
+            <!-- Footer Link -->
+            <p class="form-footer">
+              Already have an account?
+              <a href="javascript:void(0)" (click)="toggleMode(0)" class="link">Sign in</a>
+            </p>
+          </form>
+        </mat-card-content>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
 </div>

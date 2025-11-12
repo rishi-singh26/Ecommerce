@@ -1,429 +1,346 @@
-/* Authentication component - Modern UI */
+/* Authentication component - Material Design UI */
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 :root {
-	--primary: #007bff;
-	--primary-dark: #0056b3;
-	--primary-light: #e7f1ff;
-	--success: #28a745;
-	--error: #dc3545;
-	--text-dark: #1a1a1a;
-	--text-light: #666666;
-	--border: #e0e0e0;
-	--shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-	--shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-	--shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.15);
-	--transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --primary: #007bff;
+  --primary-dark: #0056b3;
+  --primary-light: #e7f1ff;
+  --text-dark: #1a1a1a;
+  --text-light: #666666;
+  --border: #e0e0e0;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Main container */
 .auth-container {
-	min-height: 100vh;
-	display: flex;
-	align-items: stretch;
-	background: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 }
 
-.auth-wrapper {
-	width: 100%;
-	display: flex;
-	align-items: stretch;
+/* Card styling */
+.auth-card {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  animation: slideIn 0.5s ease-out;
 }
 
-/* Hero Section */
-.auth-hero {
-	display: none;
-	flex: 1;
-	background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-	padding: 4rem 3rem;
-	color: white;
-	position: relative;
-	overflow: hidden;
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.auth-hero::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" opacity="0.1" fill="white"/><circle cx="80" cy="80" r="30" opacity="0.1" fill="white"/></svg>');
-	opacity: 0.5;
+/* Header styling */
+.auth-header {  
+  justify-content: start;
+  align-items: start;
+  flex-direction: row-reverse;
+  gap: 20px;
 }
 
-.hero-content {
-	position: relative;
-	z-index: 1;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	height: 100%;
-	max-width: 400px;
+.auth-logo {
+  margin-bottom: 1rem;
+  animation: fadeIn 0.6s ease-out;
 }
 
-.hero-logo {
-	margin-bottom: 2rem;
-	animation: slideInDown 0.6s ease-out;
+.auth-logo svg {
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
-.hero-logo svg {
-	display: block;
+.auth-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.5px;
+  color: #1a1a1a;
 }
 
-.hero-title {
-	font-size: 2.5rem;
-	font-weight: 700;
-	margin-bottom: 0.5rem;
-	animation: slideInDown 0.6s ease-out 0.1s both;
-	letter-spacing: -0.5px;
+.auth-subtitle {
+  font-size: 0.95rem;
+  opacity: 0.95;
+  margin-top: 0.5rem;
+  font-weight: 400;
 }
 
-.hero-subtitle {
-	font-size: 1.1rem;
-	opacity: 0.9;
-	margin-bottom: 3rem;
-	animation: slideInDown 0.6s ease-out 0.2s both;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-.hero-features {
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
+/* Tabs styling */
+.auth-tabs {
+  width: 100%;
 }
 
-.feature-item {
-	display: flex;
-	align-items: center;
-	gap: 0.75rem;
-	opacity: 0.9;
-	animation: slideInUp 0.6s ease-out 0.3s both;
-	font-size: 0.95rem;
+.auth-tabs ::ng-deep .mat-mdc-tab-labels {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid var(--border);
 }
 
-.feature-item svg {
-	flex-shrink: 0;
-	width: 24px;
-	height: 24px;
+.auth-tabs ::ng-deep .mat-mdc-tab {
+  min-width: 150px;
+  flex: 1;
 }
 
-/* Form Section */
-.auth-form-section {
-	flex: 1;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 2rem;
-	background: linear-gradient(to bottom, #fafbfc, #f5f7fa);
+.auth-tabs ::ng-deep .mat-mdc-tab:hover {
+  background-color: #eeeeee;
 }
 
-.auth-form-container {
-	width: 100%;
-	max-width: 420px;
+.auth-tabs ::ng-deep .mdc-tab__text-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
-/* Mode Toggle */
-.mode-toggle-wrapper {
-	margin-bottom: 2rem;
-	display: flex;
-	justify-content: center;
+.tab-icon {
+  font-size: 1.2rem;
+  height: auto;
+  width: auto;
 }
 
-.mode-toggle {
-	display: flex;
-	gap: 0.5rem;
-	background: #f0f0f0;
-	padding: 0.4rem;
-	border-radius: 0.75rem;
-	width: fit-content;
+.tab-label {
+  white-space: nowrap;
 }
 
-.toggle-btn {
-	padding: 0.6rem 1.2rem;
-	background: transparent;
-	border: none;
-	cursor: pointer;
-	font-weight: 500;
-	font-size: 0.95rem;
-	color: #666;
-	border-radius: 0.5rem;
-	transition: var(--transition);
-	position: relative;
+/* Form content */
+.form-content {
+  padding: 2rem !important;
 }
 
-.toggle-btn.active {
-	background: white;
-	color: var(--primary);
-	box-shadow: var(--shadow-sm);
-}
-
-.toggle-btn:hover:not(.active) {
-	color: var(--text-dark);
-}
-
-/* Alert Boxes */
-.alert-box {
-	padding: 1rem;
-	border-radius: 0.75rem;
-	margin-bottom: 1.5rem;
-	display: flex;
-	align-items: flex-start;
-	gap: 0.75rem;
-	animation: slideInDown 0.3s ease-out;
-}
-
-.error-box {
-	background: #fee;
-	color: var(--error);
-	border: 1px solid rgba(220, 53, 69, 0.2);
-}
-
-.success-box {
-	background: #efe;
-	color: var(--success);
-	border: 1px solid rgba(40, 167, 69, 0.2);
-}
-
-.alert-box svg {
-	flex-shrink: 0;
-	margin-top: 0.15rem;
-}
-
-/* Form Styles */
 .auth-form {
-	display: flex;
-	flex-direction: column;
-	gap: 1.3rem;
-	animation: slideInUp 0.4s ease-out;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
-.form-group {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
+/* Form field styling */
+.full-width {
+  width: 100%;
 }
 
-.form-label {
-	font-weight: 600;
-	font-size: 0.9rem;
-	color: var(--text-dark);
-	letter-spacing: 0.2px;
+.full-width ::ng-deep .mat-mdc-form-field {
+  width: 100%;
 }
 
-.input-wrapper {
-	position: relative;
-	display: flex;
-	align-items: center;
+.full-width ::ng-deep .mdc-text-field {
+  border-radius: 6px;
 }
 
-.form-input {
-	width: 100%;
-	padding: 0.75rem 1rem 0.75rem 1rem;
-	border: 2px solid var(--border);
-	border-radius: 0.6rem;
-	font-size: 0.95rem;
-	color: var(--text-dark);
-	background: white;
-	transition: var(--transition);
-	font-family: inherit;
+.full-width ::ng-deep .mat-mdc-form-field-error {
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
 }
 
-.form-input::placeholder {
-	color: #999;
+/* Input styling */
+.full-width ::ng-deep input {
+  font-size: 1rem;
+  letter-spacing: 0.2px;
 }
 
-.form-input:focus {
-	outline: none;
-	border-color: var(--primary);
-	background: white;
-	box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+.full-width ::ng-deep .mat-mdc-form-field-focused {
+  background-color: rgba(0, 123, 255, 0.02);
 }
 
-.input-icon {
-	position: absolute;
-	right: 1rem;
-	color: #999;
-	pointer-events: none;
-	transition: var(--transition);
+/* Icon styling in form fields */
+.full-width ::ng-deep .mat-icon {
+  font-size: 1.25rem;
+  height: 1.25rem;
+  width: 1.25rem;
+  color: var(--text-light);
+  margin-right: 0.5rem;
 }
 
-.form-input:focus ~ .input-icon {
-	color: var(--primary);
+.full-width ::ng-deep .mat-mdc-form-field-focused .mat-icon {
+  color: var(--primary);
 }
 
-/* Submit Button */
-.btn-submit {
-	padding: 0.85rem 1.5rem;
-	background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-	color: black;
-	border: none;
-	border-radius: 0.6rem;
-	font-weight: 600;
-	font-size: 0.95rem;
-	cursor: pointer;
-	transition: var(--transition);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 0.5rem;
-	letter-spacing: 0.3px;
-	box-shadow: var(--shadow-sm);
-	margin-top: 0.5rem;
+/* Password toggle button */
+.full-width ::ng-deep button[matSuffix] {
+  margin-right: -0.5rem;
 }
 
-.btn-submit:hover:not(:disabled) {
-	transform: translateY(-2px);
-	box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+.full-width ::ng-deep button[matSuffix] mat-icon {
+  margin-right: 0;
+  color: var(--text-light);
 }
 
-.btn-submit:active:not(:disabled) {
-	transform: translateY(0);
+.full-width ::ng-deep button[matSuffix]:hover mat-icon {
+  color: var(--primary);
 }
 
-.btn-submit:disabled {
-	opacity: 0.7;
-	cursor: not-allowed;
+/* Submit button */
+.submit-button {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1.5rem !important;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-height: 44px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-.btn-submit svg {
-	width: 18px;
-	height: 18px;
+.submit-button:not([disabled]):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 123, 255, 0.25);
 }
 
-/* Form Footer */
+.submit-button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.submit-button ::ng-deep .mat-icon {
+  margin-right: 0.5rem;
+}
+
+.button-text {
+  white-space: nowrap;
+}
+
+/* Spinner styling */
+.spinner {
+  margin-right: 0.5rem !important;
+}
+
+.spinner ::ng-deep circle {
+  stroke: white !important;
+}
+
+/* Form footer */
 .form-footer {
-	text-align: center;
-	font-size: 0.9rem;
-	color: var(--text-light);
-	margin-top: 1rem;
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
 }
 
-.link {
-	color: var(--primary);
-	text-decoration: none;
-	font-weight: 600;
-	transition: var(--transition);
+.form-footer .link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition);
+  cursor: pointer;
 }
 
-.link:hover {
-	text-decoration: underline;
-	color: var(--primary-dark);
+.form-footer .link:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
 }
 
-/* Animations */
-@keyframes slideInDown {
-	from {
-		opacity: 0;
-		transform: translateY(-20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-@keyframes slideInUp {
-	from {
-		opacity: 0;
-		transform: translateY(20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-/* Responsive Design */
-@media (min-width: 1024px) {
-	.auth-hero {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-}
-
-@media (max-width: 1023px) {
-	.auth-form-section {
-		padding: 2rem 1rem;
-	}
-
-	.auth-form-container {
-		max-width: 380px;
-	}
-}
-
+/* Responsive design */
 @media (max-width: 768px) {
-	.auth-container {
-		min-height: auto;
-	}
+  .auth-container {
+    padding: 1rem;
+  }
 
-	.auth-wrapper {
-		flex-direction: column;
-	}
+  .auth-card {
+    max-width: 100%;
+  }
 
-	.auth-hero {
-		display: none !important;
-	}
+  .auth-header {
+    padding: 2rem 1.5rem 1rem;
+  }
 
-	.auth-form-section {
-		padding: 2rem 1rem;
-		min-height: 100vh;
-	}
+  .auth-title {
+    font-size: 1.5rem;
+	color: #1a1a1a;
+  }
 
-	.auth-form-container {
-		max-width: 100%;
-	}
+  .form-content {
+    padding: 1.5rem !important;
+  }
 
-	.hero-title {
-		font-size: 2rem;
-	}
-
-	.form-input {
-		padding: 0.7rem 0.9rem;
-		font-size: 16px;
-	}
-
-	.btn-submit {
-		padding: 0.8rem 1.2rem;
-		font-size: 0.9rem;
-	}
+  .auth-tabs ::ng-deep .mat-mdc-tab {
+    min-width: 100px;
+  }
 }
 
 @media (max-width: 480px) {
-	.auth-form-section {
-		padding: 1.5rem 1rem;
-	}
+  .auth-header {
+    padding: 1.5rem 1rem 1rem;
+  }
 
-	.auth-form-container {
-		max-width: 100%;
-	}
+  .auth-title {
+    font-size: 1.25rem;
+  }
 
-	.mode-toggle {
-		gap: 0.3rem;
-		padding: 0.3rem;
-	}
+  .auth-subtitle {
+    font-size: 0.85rem;
+  }
 
-	.toggle-btn {
-		padding: 0.5rem 0.8rem;
-		font-size: 0.85rem;
-	}
+  .auth-logo svg {
+    width: 40px;
+    height: 40px;
+  }
 
-	.form-input {
-		padding: 0.65rem 0.8rem;
-	}
+  .form-content {
+    padding: 1rem !important;
+  }
 
-	.alert-box {
-		padding: 0.8rem;
-		font-size: 0.9rem;
-	}
+  .auth-form {
+    gap: 1rem;
+  }
 }
 
-/* Print Styles */
-@media print {
-	.auth-container {
-		display: none;
-	}
+/* Material theme overrides */
+.auth-card ::ng-deep .mat-mdc-form-field-label-wrapper {
+  padding-top: 0;
+}
+
+.auth-card ::ng-deep .mat-mdc-text-field-wrapper {
+  padding-bottom: 0;
+}
+
+.auth-card ::ng-deep .mdc-notched-outline {
+  border-color: var(--border);
+}
+
+.auth-card ::ng-deep .mat-focused .mdc-notched-outline {
+  border-color: var(--primary) !important;
+}
+
+.auth-card ::ng-deep .mat-mdc-form-field-error-wrapper {
+  margin-top: 0.5rem;
+}
+
+.auth-card ::ng-deep .mat-mdc-form-field.mat-error {
+  color: #dc3545;
+}
+
+/* Smooth transitions */
+.auth-card ::ng-deep * {
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
