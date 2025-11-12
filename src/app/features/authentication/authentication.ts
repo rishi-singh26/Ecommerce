@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth/auth.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { AuthService } from '../../core/services/auth/auth.service';
 })
 export class Authentication {
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   // mode: 'login' or 'register'
   protected mode: 'login' | 'register' = 'login';
@@ -37,6 +39,8 @@ export class Authentication {
       next: () => {
         this.success = 'Login successful.';
         this.loading = false;
+        // Redirect to home page after successful login
+        this.router.navigate(['/']);
       },
       error: (err) => {
         this.error = (err && (err.error?.message || err.error?.error)) || 'Login failed';
