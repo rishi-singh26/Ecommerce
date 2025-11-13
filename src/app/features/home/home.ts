@@ -39,39 +39,13 @@ export class Home implements OnInit, OnDestroy {
     {
       title: 'Categories',
       route: '/categories',
-      absoluteRoute: 'categories',
       action: () => { }
     },
-    // {
-    //   title: 'Categories',
-    //   route: '/categoriess',
-    //   absoluteRoute: 'categories',
-    //   action: () => { }
-    // },
-    // {
-    //   title: 'Categories',
-    //   route: '/categoriess',
-    //   absoluteRoute: 'categories',
-    //   action: () => { }
-    // },
-    // {
-    //   title: 'Categories',
-    //   route: '/categoriess',
-    //   absoluteRoute: 'categories',
-    //   action: () => { }
-    // },
-    // {
-    //   title: 'Categories',
-    //   route: '/categoriess',
-    //   absoluteRoute: 'categories',
-    //   action: () => { }
-    // },
-    // {
-    //   title: 'Categories',
-    //   route: '/categoriess',
-    //   absoluteRoute: 'categories',
-    //   action: () => { }
-    // }
+    {
+      title: 'Products',
+      route: '/products',
+      action: () => { }
+    },
   ];
 
   ngOnInit(): void {
