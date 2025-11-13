@@ -1,13 +1,13 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatNavList } from '@angular/material/list';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterOutlet, RouterLink } from '@angular/router';
-import { map, Observable, shareReplay } from 'rxjs';
+import { RouterOutlet, RouterLink, Router, NavigationEnd } from '@angular/router';
+import { map, Observable, shareReplay, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -26,8 +26,12 @@ import { map, Observable, shareReplay } from 'rxjs';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {
+export class Home implements OnInit, OnDestroy {
   private breakpointObserver: BreakpointObserver = inject(BreakpointObserver);
+  private router: Router = inject(Router);
+
+  public currentRoute: string | null = null;
+  private routerSubscription$: Subscription | undefined;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(result => result.matches), shareReplay());
 
@@ -35,9 +39,58 @@ export class Home {
     {
       title: 'Categories',
       route: '/categories',
-      routeName: 'categories',
       absoluteRoute: 'categories',
       action: () => { }
-    }
+    },
+    // {
+    //   title: 'Categories',
+    //   route: '/categoriess',
+    //   absoluteRoute: 'categories',
+    //   action: () => { }
+    // },
+    // {
+    //   title: 'Categories',
+    //   route: '/categoriess',
+    //   absoluteRoute: 'categories',
+    //   action: () => { }
+    // },
+    // {
+    //   title: 'Categories',
+    //   route: '/categoriess',
+    //   absoluteRoute: 'categories',
+    //   action: () => { }
+    // },
+    // {
+    //   title: 'Categories',
+    //   route: '/categoriess',
+    //   absoluteRoute: 'categories',
+    //   action: () => { }
+    // },
+    // {
+    //   title: 'Categories',
+    //   route: '/categoriess',
+    //   absoluteRoute: 'categories',
+    //   action: () => { }
+    // }
   ];
+
+  ngOnInit(): void {
+    this.currentRoute = this.router.url;
+    
+    this.routerSubscription$ = this.router.events.subscribe(x => {
+      if (x instanceof NavigationEnd) {
+        this.currentRoute = x.url;
+      }
+    });
+  }
+
+  getPageName(): string {
+    const routeData = this.featureGroups.find(f => f.route === this.currentRoute);
+
+    return routeData?.title ?? '';
+  }
+
+  ngOnDestroy(): void {
+    this.routerSubscription$?.unsubscribe();
+  }
 }

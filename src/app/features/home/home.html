@@ -1,28 +1,25 @@
-<div class="admin-container">
-  <mat-toolbar class="bg-white">
-    <a class="navbar-brand graphik-semi-bold d-flex align-items-center py-0 order-2" aria-label="Ecommerce">
-      Ecommerce
-    </a>
-    @if (isHandset$ | async) {
+<div class="home-container">
+  <mat-toolbar>
+    <div class="toolbar-left">
+      @if (isHandset$ | async) {
       <button mat-icon-button (click)="drawer.toggle()" aria-label="Toggle sidenav">
         <mat-icon>menu</mat-icon>
       </button>
-    }
-    <span class="ms-auto page-label order-3 me-3 graphik-medium">Ecommerce 2</span>
+      }
+      <a aria-label="Ecommerce" class="title">
+        Ecommerce
+      </a>
+    </div>
+    <span class="page-label">{{getPageName()}}</span>
   </mat-toolbar>
   <mat-sidenav-container>
-    <mat-sidenav #drawer class="sidenav" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    <mat-sidenav #drawer [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-      <mat-nav-list class="sidenav-container h-100 custom-overflow-scroll pt-0">
-        <!-- <a *ngFor="let page of features" (click)="page.action()" mat-list-item
-          class="sidenav-item mx-3 mx-lg-4 mb-1 rounded"
-          [ngClass]="{'sidenav-item-active': currentRoute === page.routeName}" [routerLink]="page.route">
-          <span class="sidenav-item-title">{{ page.title }}</span>
-        </a> -->
+      <mat-nav-list>
         @for (item of featureGroups; track item) {
-          <a mat-list-item class="sidenav-item" [routerLink]="item.route">
-            <span class="sidenav-item-title">{{ item.title }}</span>
-          </a>
+        <a mat-list-item [routerLink]="item.route" [ngClass]="{'active': currentRoute === item.route }">
+          <span>{{ item.title }}</span>
+        </a>
         }
       </mat-nav-list>
     </mat-sidenav>
