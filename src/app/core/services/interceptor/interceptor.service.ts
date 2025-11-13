@@ -6,70 +6,7 @@ import { LoginData } from '../../../store/auth/auth.model';
 import { AuthService } from '../auth/auth.service';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-
-/**
- * Decodes a JWT token to extract the payload
- * @param token - The JWT token string
- * @returns The decoded payload object or null if invalid
- */
-function decodeToken(token: string): any {
-  try {
-    const parts = token.split('.');
-    if (parts.length !== 3) {
-      console.warn('Invalid token format: expected 3 parts separated by dots');
-      return null;
-    }
-
-    // Decode the payload (second part of JWT)
-    const decoded = atob(parts[1]);
-    return JSON.parse(decoded);
-  } catch (error) {
-    console.error('Error decoding token:', error);
-    return null;
-  }
-}
-
-/**
- * Checks if a JWT token has expired
- * @param token - The JWT token string
- * @returns true if token is expired, false otherwise
- */
-function isTokenExpired(token: string): boolean {
-  const payload = decodeToken(token);
-
-  if (!payload || typeof payload.exp !== 'number') {
-    console.warn('Token does not contain valid expiration claim');
-    return true;
-  }
-
-  // Convert exp (seconds since epoch) to milliseconds and compare with current time
-  const expirationTime = payload.exp * 1000;
-  const currentTime = Date.now();
-
-  // Add 1 minute buffer to prevent using tokens that are about to expire
-  const buffer = 60 * 1000; // 1 minute in milliseconds
-  return currentTime > (expirationTime - buffer);
-}
-
-/**
- * Checks if an access token is valid (not empty and not expired)
- * @param token - The access token string
- * @returns true if token is valid, false otherwise
- */
-function isAccessTokenValid(token: string): boolean {
-  // Check if token is empty or whitespace only
-  if (!token || typeof token !== 'string' || token.trim().length === 0) {
-    return false;
-  }
-
-  // Check if token has expired
-  if (isTokenExpired(token)) {
-    console.warn('Access token has expired');
-    return false;
-  }
-
-  return true;
-}
+import { JwtProvider } from '../jwt/jwt-provider';
 
 /**
  * HTTP Interceptor function that adds Authorization header to requests
@@ -96,7 +33,7 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
       // Check if loginData and accessToken exist
       if (authState.accessToken) {
         // Validate the access token (check if not empty and not expired)
-        if (isAccessTokenValid(authState.accessToken)) {
+        if (JwtProvider.isTokenValid(authState.accessToken)) {
           // Clone the request and add the Authorization header
           request = request.clone({
             setHeaders: {
